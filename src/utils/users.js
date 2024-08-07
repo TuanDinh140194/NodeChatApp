@@ -21,7 +21,7 @@ const addUser = ({ id, username, room }) => {
   //Validate UserName
   if (existingUser) {
     return {
-      error: "User has existed",
+      error: "User Name has existed",
     };
   }
 
@@ -57,9 +57,16 @@ const getUserInRoom = (room) => {
   return users.filter((user) => user.room === room);
 };
 
+//Get All Active Room
+const getAllActiveRooms = () => {
+  const rooms = users.map((user) => user.room);
+  return [...new Set(rooms)];
+};
+
 module.exports = {
   addUser,
   removeUser,
   getUser,
   getUserInRoom,
+  getAllActiveRooms,
 };

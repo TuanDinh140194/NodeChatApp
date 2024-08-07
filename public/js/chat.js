@@ -70,6 +70,10 @@ socket.on("roomData", ({ room, users }) => {
   });
 
   document.querySelector("#sidebar").innerHTML = html;
+
+   // Set the document title to show the room number
+   document.title = `Chat Room - ${room}`;
+
 });
 
 document.querySelector("#form-message").addEventListener("submit", (e) => {

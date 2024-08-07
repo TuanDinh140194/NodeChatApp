@@ -12,6 +12,7 @@ const {
   removeUser,
   getUser,
   getUserInRoom,
+  getAllActiveRooms,
 } = require("./utils/users");
 
 const app = express();
@@ -26,6 +27,10 @@ app.use(express.static(publicDirectoryPath));
 
 io.on("connection", (socket) => {
   console.log("New WedSocket connection");
+  //Active room
+  socket.emit("activeRoom", {
+    rooms: getAllActiveRooms(),
+  });
 
   socket.on("join", ({ username, room }, callback) => {
     const { error, user } = addUser({ id: socket.id, username, room });
@@ -86,11 +91,9 @@ io.on("connection", (socket) => {
 
       io.to(user.room).emit("roomData", {
         room: user.room,
-        users: getUserInRoom(user.room)
-      })
+        users: getUserInRoom(user.room),
+      });
     }
-
-
   });
 });
 
